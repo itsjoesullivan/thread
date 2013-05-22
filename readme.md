@@ -1,4 +1,6 @@
-##Thread<img src="https://raw.github.com/itsjoesullivan/thread/master/badge.png" width=128/>
+##Thread
+
+<img src="https://raw.github.com/itsjoesullivan/thread/master/badge.png" width=32 style="position:absolute;top:30px;" />
 
 Make workers a little less worker-y:
 - Define them in-line rather than via an external include
