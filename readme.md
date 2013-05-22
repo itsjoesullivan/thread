@@ -1,4 +1,4 @@
-##Thread
+##Thread<img src="https://raw.github.com/itsjoesullivan/thread/master/badge.png" />
 
 Make workers a little less worker-y:
 - Define them in-line rather than via an external include
