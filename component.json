@@ -1,0 +1,8 @@
+{
+	"name": "thread",
+	"version": "1.0.0",
+	"scripts": ["index.js"],
+	"dependencies": {
+		"itsjoesullivan/event": "*"
+	}
+}
