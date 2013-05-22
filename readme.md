@@ -23,16 +23,21 @@
 
 ##API
 
-###In-thread
+You're passing messages between the worker and the UI thread. Both have the same API:
 
-####thread.send [as in itsjoesullivan/events](https://github.com/itsjoesullivan/event#eventsonnamefn)
-####thread.on
-####thread.trigger
+###thread.send
 
-var thread = new Thread(expensiveProcess);
+```javascript
+	thread.send(name,arg1,arg2,...)
+```
 
-thread.send(obj);
+Send a message to the other 
 
-thread.send(name,obj);
+###thread.on
+As in [itsjoesullivan/events](https://github.com/itsjoesullivan/event#eventsonnamefn)
 
-thread.on(name,fn);
+```javascript
+	thread.on('event-name',function(arg1,arg2,...) {
+		//handle event
+	});
+```

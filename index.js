@@ -12,8 +12,6 @@ var Thread = function(workerObject) {
 
 	var workerWithHelper = this.prependHelpers(workerString);
 
-	console.log(workerWithHelper)
-
 	//Make a blob of it
 	var blob = new Blob([workerWithHelper], {type: 'text/javascript'});
 
@@ -89,7 +87,6 @@ Thread.prototype.prependHelpers = function(workerString) {
 	'};\n';
 
 	return helpers + '\n' + workerString;
-
 };
 
 module.exports = Thread;
