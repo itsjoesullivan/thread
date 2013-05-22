@@ -7,10 +7,9 @@ Make workers a little less worker-y:
 ##Usage
 
 ```javascript
-
 	//Define the worker inside a single function.
-	var routine = function() {
-		thread.on('pizzaOrder',makePizza);
+	var caesars = function() {
+		thread.on('order',makePizza);
 
 		//Naturally the worker can only reference variables defined within this scope
 		function makePizza(type) {
@@ -19,13 +18,12 @@ Make workers a little less worker-y:
 		};
 	};
 
-	var thread = new Thread(routine);
+	var thread = new Thread(caesars);
 	thread.on('pizza', function(pizza) {
 		console.log(pizza);
 		//"cheese pizza"
 	});
-	thread.send('pizzaOrder','cheese')
-	
+	thread.send('order','cheese')
 ```
 
 ##API
@@ -37,8 +35,6 @@ Send a message to the other side
 ```javascript
 thread.send(name,arg1,arg2,...)
 ```
-
-
 
 ###thread.on
 Listen for a message by name
