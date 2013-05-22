@@ -6,6 +6,8 @@ Make workers a little less worker-y:
 - Define them in-line rather than via an external include
 - Some API abstraction: "send" and "on" instead of postMessage
 
+Works with Chrome + Firefox
+
 ##Usage
 
 ```javascript
