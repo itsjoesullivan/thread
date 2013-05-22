@@ -1,13 +1,5 @@
 var Event = require('event');
 
-/*var work = function() {
-	var count = 0;
-
-	while(count < 1000000000	) {
-		count++;
-	}
-};*/
-
 /** Create a new thread
 */
 var Thread = function(workerObject) {
@@ -18,19 +10,34 @@ var Thread = function(workerObject) {
 	//Turn it into an immediately-executing function
 	var workerString = this.encloseString(objectString);
 
+	var workerWithHelper = this.prependHelpers(workerString);
+
 	//Make a blob of it
-	var blob = new Blob([workerString], {type: 'text/javascript'});
+	var blob = new Blob([workerWithHelper], {type: 'text/javascript'});
 
 	//Create a worker pointed at the blob
 	this.worker = new Worker(window.URL.createObjectURL(blob));
 
+	this.worker.addEventListener('message', function(e) {
+		if('type' in e.data && e.data.type === 'thread.send') {
+			this.trigger(e.data.name,e.data.args);
+		} else {
+			this.trigger('message',e.data,e);
+		}
+	}.bind(this));
+
 	return this;
 };
 
-
-
 Thread.prototype = new Event();
 
+Thread.prototype.send = function() {
+	this.worker.postMessage.apply(this.worker,arguments);
+};
+
+/**
+ * Turn object into string.
+ */
 Thread.prototype.stringifyObject = function(workerObject) {
 	if(typeof workerObject === 'function') {
 		return workerObject.toString();
@@ -44,27 +51,29 @@ Thread.prototype.stringifyObject = function(workerObject) {
 	return workerString;
 };
 
+/**
+ * Turn string into immediately-executing function string
+ */
 Thread.prototype.encloseString = function(workerString) {
 
 	return '(' + workerString + ')()';
 
 };
 
-var t = new Thread(work);
+Thread.prototype.prependHelpers = function(workerString) {
 
-var updateTime = function() {
-	document.getElementById('timer').innerHTML = new Date().getTime();
-}
+	var helpers = 'thread = {' + 
+		'send: function(name,arg1,arg2) {' + 
+			'postMessage({' + 
+				'name: name,' + 
+				'args: Array.prototype.slice.call(arguments,1),' + 
+				"type: 'thread.send'" + 
+			'});' + 
+		'}' + 
+	'};';
 
+	return helpers + '\n' + workerString;
 
+};
 
-setInterval(updateTime,100);
-work();
-//var worker = new Worker('hi.js');
-
-
-//t.worker.addEventListener('message',onMessage);
-
-function onMessage(e) {
-	console.log(e.data);
-}
+module.exports = Thread;
