@@ -26,18 +26,18 @@
 You're passing messages between the worker and the UI thread. Both have the same API:
 
 ###thread.send
-
+Send a message to the other side
 ```javascript
-	thread.send(name,arg1,arg2,...)
+thread.send(name,arg1,arg2,...)
 ```
 
-Send a message to the other 
+
 
 ###thread.on
-As in [itsjoesullivan/events](https://github.com/itsjoesullivan/event#eventsonnamefn)
-
+Listen for a message by name
 ```javascript
-	thread.on('event-name',function(arg1,arg2,...) {
-		//handle event
-	});
+thread.on('event-name',function(arg1,arg2,...) {
+	//handle event
+});
 ```
+
