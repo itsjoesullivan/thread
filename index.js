@@ -20,7 +20,7 @@ var Thread = function(workerObject) {
 
 	this.worker.addEventListener('message', function(e) {
 		if(typeof e.data === 'object' && 'type' in e.data && e.data.type === 'thread.send') {
-			this.trigger(e.data.name,e.data.args);
+			this.trigger.apply(this,[e.data.name].concate.data.args)
 		} else {
 			this.trigger('message',e.data,e);
 		}
