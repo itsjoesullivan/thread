@@ -8,6 +8,7 @@ Make workers a little less worker-y:
 
 ```javascript
 
+	//Define the worker inside a single function.
 	var routine = function() {
 		thread.on('pizzaOrder',makePizza);
 
